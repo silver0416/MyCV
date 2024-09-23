@@ -6,6 +6,7 @@ import cc.bap5.models.CVSection
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.aicare1
 import kotlinproject.composeapp.generated.resources.aicare2
+import kotlinproject.composeapp.generated.resources.iotapp
 import org.jetbrains.compose.resources.painterResource
 
 
@@ -35,7 +36,10 @@ val japaneseContent = CVContent(
     projects = listOf(
         CVSection(
             "卒業プロジェクト: IoTアプリケーション",
-            "IoTアプリケーションとバックエンドサーバーの開発"
+            "IoTアプリケーションとバックエンドサーバーの開発",
+            listOf(
+                Res.drawable.iotapp
+            )
         ),
         CVSection(
             "大学社会的責任(USR)フレームワーク: Happy-Care&Happy-Life (アプリケーション開発)",
