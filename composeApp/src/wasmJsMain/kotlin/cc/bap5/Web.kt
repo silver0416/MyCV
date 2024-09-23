@@ -1,17 +1,26 @@
 package cc.bap5
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.onClick
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.semantics.Role.Companion.Image
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import cc.bap5.content.englishContent
 import cc.bap5.content.japaneseContent
 import cc.bap5.models.CVContent
@@ -19,6 +28,7 @@ import cc.bap5.models.CVSection
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.ic_github
 import kotlinx.browser.window
+import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
@@ -49,7 +59,12 @@ fun CVHeader(content: CVContent) {
 }
 
 @Composable
-fun CVSection(title: String, content: List<CVSection>) {
+fun CVSection(
+    title: String,
+    content: List<CVSection>,
+    showDialog: MutableState<Boolean> = remember { mutableStateOf(false) },
+    dialogImage: MutableState<DrawableResource?> = remember { mutableStateOf(null) }
+) {
     val show = if (title == "Projects") {
         "Show"
     } else {
@@ -94,7 +109,7 @@ fun CVSection(title: String, content: List<CVSection>) {
                         horizontalArrangement = Arrangement.Start,
                     ) {
                         Text(text = line.title, modifier = Modifier.weight(0.8f))
-                        if (line.details != null) {
+                        if (line.details != null || line.image != null) {
                             TextButton(
                                 onClick = {
                                     // 向下展開詳細內容
@@ -107,7 +122,26 @@ fun CVSection(title: String, content: List<CVSection>) {
                         }
                     }
                     AnimatedVisibility(visible = detailsVisible.value) {
-                        Text(text = line.details ?: "", modifier = Modifier.padding(start = 16.dp))
+                        Column(
+                            modifier = Modifier.fillMaxWidth().padding(start = 16.dp),
+                            verticalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            Text(text = line.details ?: "", modifier = Modifier.padding(start = 16.dp))
+                            LazyRow {
+                                line.image?.forEach { image ->
+                                    item {
+                                        Image(
+                                            painter = painterResource(image),
+                                            contentDescription = null,
+                                            modifier = Modifier.size(200.dp).clickable {
+                                                dialogImage.value = image
+                                                showDialog.value = true
+                                            }
+                                        )
+                                    }
+                                }
+                            }
+                        }
                     }
                     if (line != content.last()) {
                         HorizontalDivider(
@@ -143,8 +177,8 @@ fun CVEducation(content: CVContent) {
 }
 
 @Composable
-fun CVProjects(content: CVContent) {
-    CVSection(if (content == japaneseContent) "プロジェクト" else "Projects", content.projects)
+fun CVProjects(content: CVContent, showDialog: MutableState<Boolean>, dialogImage: MutableState<DrawableResource?>) {
+    CVSection(if (content == japaneseContent) "プロジェクト" else "Projects", content.projects, showDialog, dialogImage)
 }
 
 @Composable
@@ -170,6 +204,7 @@ fun GitHubLink() {
 }
 
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun CVPage() {
     // 定義一個狀態來儲存當前語言是否為日語
@@ -178,6 +213,23 @@ fun CVPage() {
     // 根據語言選擇適當的內容
     val content = if (isJapanese) japaneseContent else englishContent
     val scrollState = rememberLazyListState()
+    val showDialog = remember { mutableStateOf(false) }
+    val dialogImage = remember { mutableStateOf<DrawableResource?>(null) }
+
+    if (showDialog.value) {
+        Dialog(
+            onDismissRequest = { showDialog.value = false },
+            properties = DialogProperties(dismissOnBackPress = true, dismissOnClickOutside = true)
+        ) {
+            Image(
+                painter = painterResource(dialogImage.value!!),
+                contentDescription = null,
+                modifier = Modifier.size(400.dp).onClick{
+                    showDialog.value = false
+                }
+            )
+        }
+    }
 
     LazyColumn(
         modifier = Modifier.fillMaxSize().padding(16.dp),
@@ -214,7 +266,7 @@ fun CVPage() {
                 Spacer(modifier = Modifier.height(16.dp))
                 CVExperience(content = content)
                 Spacer(modifier = Modifier.height(16.dp))
-                CVProjects(content = content)
+                CVProjects(content = content, showDialog = showDialog, dialogImage = dialogImage)
                 Spacer(modifier = Modifier.height(30.dp))
             }
         }

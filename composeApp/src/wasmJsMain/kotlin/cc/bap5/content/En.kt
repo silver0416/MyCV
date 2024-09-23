@@ -1,9 +1,17 @@
 package cc.bap5.content
 
+import androidx.compose.foundation.Image
 import cc.bap5.models.CVContent
 import cc.bap5.models.CVSection
+import kotlinproject.composeapp.generated.resources.Res
+import kotlinproject.composeapp.generated.resources.aicare1
+import kotlinproject.composeapp.generated.resources.aicare2
+import kotlinproject.composeapp.generated.resources.iotapp
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.painterResource
 
 // 英語資料
+@OptIn(ExperimentalResourceApi::class)
 val englishContent = CVContent(
     name = "Hsiao Li-Yang",
     personalInfo = listOf(
@@ -17,7 +25,7 @@ val englishContent = CVContent(
         CVSection("Android Application Development"),
         CVSection("Compose Multiplatform"),
         CVSection("SQL"),
-        CVSection("Linux"),
+        CVSection("Linux and docker deployment"),
     ),
     experience = listOf(
         CVSection("September 2021 - June 2023: Tamkang University Computer Support Service Team Vice Leader"),
@@ -29,11 +37,18 @@ val englishContent = CVContent(
     projects = listOf(
         CVSection(
             "Graduation Project: IoT Application",
-            "IoT application and backend server development"
+            "IoT application and backend server development",
+            listOf(
+                Res.drawable.iotapp
+            )
         ),
         CVSection(
             "University Social Responsibility (USR) Framework: Happy-Care&Happy-Life (Application Development)",
-            "Application for the elderly to find companionship and care services"
+            "Application for the elderly to find companionship and care services",
+            listOf(
+                Res.drawable.aicare1,
+                Res.drawable.aicare2
+            )
         )
     ),
     languages = listOf(

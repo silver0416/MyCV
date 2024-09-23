@@ -1,7 +1,12 @@
 package cc.bap5.content
 
+import androidx.compose.foundation.Image
 import cc.bap5.models.CVContent
 import cc.bap5.models.CVSection
+import kotlinproject.composeapp.generated.resources.Res
+import kotlinproject.composeapp.generated.resources.aicare1
+import kotlinproject.composeapp.generated.resources.aicare2
+import org.jetbrains.compose.resources.painterResource
 
 
 // 日語資料
@@ -18,22 +23,27 @@ val japaneseContent = CVContent(
         CVSection("Androidアプリケーション開発"),
         CVSection("Compose Multiplatform"),
         CVSection("SQL"),
-        CVSection("Linux"),
+        CVSection("Linuxとdockerのデプロイメント"),
     ),
     experience = listOf(
         CVSection("2021年9月 - 2023年6月: 淡江大学コンピュータサポートサービスチーム 副リーダー"),
         CVSection("2023年7月 - 2024年1月: 大学社会的責任(USR)フレームワーク アシスタント"),
     ),
     education = listOf(
-        CVSection("淡江大学情報管理学士"),
+        CVSection("淡江大学 情報管理科"),
     ),
     projects = listOf(
-        CVSection("卒業プロジェクト: IoTアプリケーション",
+        CVSection(
+            "卒業プロジェクト: IoTアプリケーション",
             "IoTアプリケーションとバックエンドサーバーの開発"
         ),
         CVSection(
             "大学社会的責任(USR)フレームワーク: Happy-Care&Happy-Life (アプリケーション開発)",
-            "高齢者が仲間や介護サービスを見つけるためのアプリケーション"
+            "高齢者が仲間や介護サービスを見つけるためのアプリケーション",
+            listOf(
+                Res.drawable.aicare1,
+                Res.drawable.aicare2
+            )
         )
     ),
     languages = listOf(
