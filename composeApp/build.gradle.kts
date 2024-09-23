@@ -1,4 +1,3 @@
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 
@@ -15,6 +14,16 @@ repositories {
 }
 
 kotlin {
+    js(IR) {
+        moduleName = "composeApp"
+        browser {
+            commonWebpackConfig {
+                outputFileName = "composeApp.js"
+            }
+        }
+        binaries.executable()
+    }
+
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
         moduleName = "composeApp"
