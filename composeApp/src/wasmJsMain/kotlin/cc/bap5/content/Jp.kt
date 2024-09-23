@@ -9,8 +9,6 @@ val japaneseContent = CVContent(
     name = "ショウ　リーヤーン",
     personalInfo = listOf(
         CVSection("メール: silver041692@gmail.com"),
-        CVSection("電話: 090-4071-7763"),
-        CVSection("住所: 東京都荒川区東日暮里5-34-8 日暮里サンライズマンション204"),
         CVSection("出身地: 台北市, 台湾"),
     ),
     skills = listOf(

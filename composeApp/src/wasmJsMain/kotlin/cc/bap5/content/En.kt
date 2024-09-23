@@ -8,8 +8,6 @@ val englishContent = CVContent(
     name = "Hsiao Li-Yang",
     personalInfo = listOf(
         CVSection("Email: silver041692@gmail.com"),
-        CVSection("Phone: 090-4071-7763"),
-        CVSection("Address: Nippori Sunrise Mansion 204, 5-34-8 Higashi-Nippori, Arakawa-ku, Tokyo"),
         CVSection("From: Taipei, Taiwan"),
     ),
     skills = listOf(
@@ -29,7 +27,8 @@ val englishContent = CVContent(
         CVSection("Tamkang University Bachelor of Information Management"),
     ),
     projects = listOf(
-        CVSection("Graduation Project: IoT Application",
+        CVSection(
+            "Graduation Project: IoT Application",
             "IoT application and backend server development"
         ),
         CVSection(
@@ -41,5 +40,5 @@ val englishContent = CVContent(
         CVSection("Chinese"),
         CVSection("English (TOEIC scheduled for October)"),
         CVSection("Japanese (N2, N1 scheduled for December)")
-    )
+    ),
 )

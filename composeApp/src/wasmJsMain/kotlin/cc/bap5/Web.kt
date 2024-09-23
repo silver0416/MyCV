@@ -206,15 +206,16 @@ fun CVPage() {
                 Spacer(modifier = Modifier.height(16.dp))
                 CVPersonalInfo(content = content)
                 Spacer(modifier = Modifier.height(16.dp))
+                CVEducation(content = content)
+                Spacer(modifier = Modifier.height(16.dp))
                 CVLanguages(content = content)
                 Spacer(modifier = Modifier.height(16.dp))
                 CVSkills(content = content)
                 Spacer(modifier = Modifier.height(16.dp))
                 CVExperience(content = content)
                 Spacer(modifier = Modifier.height(16.dp))
-                CVEducation(content = content)
-                Spacer(modifier = Modifier.height(16.dp))
                 CVProjects(content = content)
+                Spacer(modifier = Modifier.height(30.dp))
             }
         }
     }
