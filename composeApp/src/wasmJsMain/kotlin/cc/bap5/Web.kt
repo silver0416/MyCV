@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.semantics.Role.Companion.Image
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -27,6 +28,7 @@ import cc.bap5.models.CVContent
 import cc.bap5.models.CVSection
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.ic_github
+import kotlinproject.composeapp.generated.resources.ic_right_top
 import kotlinx.browser.window
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
@@ -91,6 +93,7 @@ fun CVSection(
             if (
                 title == "Projects" || title == "プロジェクト"
             ) {
+                Spacer(modifier = Modifier.weight(0.8f))
                 GitHubLink()
             }
         }
@@ -189,17 +192,34 @@ fun CVLanguages(content: CVContent) {
 
 @Composable
 fun GitHubLink() {
-    IconButton(
+    Button(
         onClick = {
             // 打開我的GitHub頁面
             window.open("https://github.com/silver0416", "_blank")
-        }
+        },
+        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.surfaceContainer)
     ) {
-        Icon(
-            painter = painterResource(Res.drawable.ic_github),
-            contentDescription = "GitHub",
-            tint = MaterialTheme.colorScheme.primary,
-        )
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Icon(
+                painter = painterResource(Res.drawable.ic_github),
+                contentDescription = "GitHub",
+                tint = MaterialTheme.colorScheme.primary,
+            )
+            Text(
+                text = "GitHub",
+                style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold),
+                color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.padding(start = 4.dp)
+            )
+            Icon(
+                painter = painterResource(Res.drawable.ic_right_top),
+                contentDescription = "right_top",
+                tint = MaterialTheme.colorScheme.primary,
+            )
+        }
     }
 }
 
@@ -224,7 +244,7 @@ fun CVPage() {
             Image(
                 painter = painterResource(dialogImage.value!!),
                 contentDescription = null,
-                modifier = Modifier.size(400.dp).onClick{
+                modifier = Modifier.size(400.dp).onClick {
                     showDialog.value = false
                 }
             )
