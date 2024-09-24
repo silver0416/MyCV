@@ -7,7 +7,37 @@
     <script type="application/javascript" src="skiko.js"></script>
     <script type="application/javascript" src="composeApp.js"></script>
     <link type="text/css" rel="stylesheet" href="styles.css">
+    <style>
+        .loading {
+          border: 4px solid #f3f3f3;
+          border-radius: 50%;
+          border-top: 4px solid #6750a4;
+          width: 40px;
+          height: 40px;
+          -webkit-animation: spin 0.5s linear infinite; /* Safari */
+          animation: spin 0.5s linear infinite;
+          position: absolute;
+          top: 10%;
+          left: 50%;
+          transform: translateX(-50%);
+        }
+
+        /* Safari */
+        @-webkit-keyframes spin {
+          0% { -webkit-transform: rotate(0deg); }
+          100% { -webkit-transform: rotate(360deg); }
+        }
+
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+    </style>
 </head>
 <body>
+<!--loading...-->
+<div id="loading" class="loading">
+    <div class="loading__spinner"></div>
+</div>
 </body>
 </html>
