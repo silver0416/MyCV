@@ -26,7 +26,9 @@ import cc.bap5.content.englishContent
 import cc.bap5.content.japaneseContent
 import cc.bap5.models.CVContent
 import cc.bap5.models.CVSection
+import kotlinproject.composeapp.generated.resources.*
 import kotlinproject.composeapp.generated.resources.Res
+import kotlinproject.composeapp.generated.resources.ic_email
 import kotlinproject.composeapp.generated.resources.ic_github
 import kotlinproject.composeapp.generated.resources.ic_right_top
 import kotlinx.browser.window
@@ -77,6 +79,15 @@ fun CVSection(
     } else {
         "非表示"
     }
+    val windowWidth = remember { mutableStateOf(window.window.innerWidth) }
+    val windowHeight = remember { mutableStateOf(window.window.innerHeight) }
+    val isMobile = windowWidth.value < 600 || windowHeight.value < 600
+
+    window.addEventListener("resize", {
+        windowWidth.value = window.window.innerWidth
+        windowHeight.value = window.window.innerHeight
+    })
+
     Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -106,21 +117,97 @@ fun CVSection(
             Column(modifier = Modifier.padding(16.dp)) {
                 content.forEach { line ->
                     val detailsVisible = remember { mutableStateOf(false) }
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Start,
-                    ) {
-                        Text(text = line.title, modifier = Modifier.weight(0.8f))
-                        if (line.details != null || line.image != null) {
-                            TextButton(
-                                onClick = {
-                                    // 向下展開詳細內容
-                                    detailsVisible.value = !detailsVisible.value
-                                },
-                                modifier = Modifier.weight(0.2f)
-                            ) {
-                                Text(text = if (detailsVisible.value) hide else show)
+                    if (isMobile) {
+                        Column(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalArrangement = Arrangement.Center,
+                            horizontalAlignment = Alignment.Start,
+                        ) {
+                            Text(text = line.title)
+                            if (line.title.contains("Email") || line.title.contains("メール")) {
+                                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start) {
+                                    IconButton(
+                                        onClick = {
+                                            // 打開郵件程式
+                                            window.open("mailto:${line.details}", "_blank")
+                                        },
+                                    ) {
+                                        Icon(
+                                            painter = painterResource(Res.drawable.ic_email),
+                                            contentDescription = "Email",
+                                            tint = MaterialTheme.colorScheme.primary,
+                                        )
+                                    }
+                                    IconButton(
+                                        onClick = {
+                                            // 複製郵件地址
+                                            window.navigator.clipboard.writeText(line.details ?: "")
+                                        },
+                                    ) {
+                                        Icon(
+                                            painter = painterResource(Res.drawable.ic_copy),
+                                            contentDescription = "copy to clipboard",
+                                            tint = MaterialTheme.colorScheme.primary,
+                                        )
+                                    }
+                                }
+                            }
+                            else if (line.details != null || line.image != null) {
+                                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+                                    TextButton(
+                                        onClick = {
+                                            // 向下展開詳細內容
+                                            detailsVisible.value = !detailsVisible.value
+                                        },
+                                    ) {
+                                        Text(text = if (detailsVisible.value) hide else show)
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Start,
+                        ) {
+                            Text(text = line.title, modifier = Modifier.weight(0.8f))
+                            if (line.title.contains("Email") || line.title.contains("メール")) {
+                                IconButton(
+                                    onClick = {
+                                        // 打開郵件程式
+                                        window.open("mailto:${line.details}", "_blank")
+                                    },
+                                ) {
+                                    Icon(
+                                        painter = painterResource(Res.drawable.ic_email),
+                                        contentDescription = "Email",
+                                        tint = MaterialTheme.colorScheme.primary,
+                                    )
+                                }
+                                IconButton(
+                                    onClick = {
+                                        // 複製郵件地址
+                                        window.navigator.clipboard.writeText(line.details ?: "")
+                                    },
+                                ) {
+                                    Icon(
+                                        painter = painterResource(Res.drawable.ic_copy),
+                                        contentDescription = "copy to clipboard",
+                                        tint = MaterialTheme.colorScheme.primary,
+                                    )
+                                }
+                            }
+                            else if (line.details != null || line.image != null) {
+                                TextButton(
+                                    onClick = {
+                                        // 向下展開詳細內容
+                                        detailsVisible.value = !detailsVisible.value
+                                    },
+                                    modifier = Modifier.weight(0.2f)
+                                ) {
+                                    Text(text = if (detailsVisible.value) hide else show)
+                                }
                             }
                         }
                     }

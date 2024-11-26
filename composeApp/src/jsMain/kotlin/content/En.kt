@@ -15,7 +15,7 @@ import org.jetbrains.compose.resources.painterResource
 val englishContent = CVContent(
     name = "Hsiao Li-Yang",
     personalInfo = listOf(
-        CVSection("Email: silver041692@gmail.com"),
+        CVSection("Email: silver041692@gmail.com","silver041692@gmail.com"),
         CVSection("From: Taipei, Taiwan"),
     ),
     skills = listOf(
