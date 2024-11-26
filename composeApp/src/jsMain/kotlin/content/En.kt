@@ -53,7 +53,7 @@ val englishContent = CVContent(
     ),
     languages = listOf(
         CVSection("Chinese"),
-        CVSection("English (TOEIC scheduled for October)"),
+        CVSection("English (2024.10 | TOEIC 770 points)"),
         CVSection("Japanese (N2, N1 scheduled for December)")
     ),
 )

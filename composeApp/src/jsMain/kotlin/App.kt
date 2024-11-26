@@ -2,7 +2,6 @@ package cc.bap5
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Typography
@@ -13,6 +12,7 @@ import androidx.compose.ui.platform.LocalFontFamilyResolver
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import org.jetbrains.skiko.loadBytesFromPath
+import androidx.compose.ui.text.font.Font
 
 @Composable
 fun App() {
@@ -24,7 +24,7 @@ fun App() {
         fontFamily = FontFamily(
             androidx.compose.ui.text.platform.Font(
                 "NotoSansJP",
-                loadBytesFromPath("NotoSansJP-Medium.ttf")
+                loadBytesFromPath("NotoSansJP-Medium.woff2")
             )
         )
         fontFamilyResolver.preload(fontFamily!!)
@@ -62,3 +62,4 @@ fun App() {
         }
     }
 }
+
